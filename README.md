@@ -220,4 +220,4 @@ When adding new utilities to the base library:
 - This library contains only reusable, non-service-specific utilities
 - Service-specific code should remain in individual services
 - Database clients and queue integration are in separate libraries
-- Supabase-specific code remains in the platform library
+- Platform-specific code remains in the platform library

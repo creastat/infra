@@ -240,7 +240,7 @@ func (l *Loader) substituteValue(v reflect.Value) {
 }
 
 // expandEnvVar expands environment variable references in a string
-// Supports ${VAR_NAME}, ${VAR_NAME:-default}, and $VAR_NAME patterns
+// Supports ${VAR_NAME}, ${VAR_NAME:-default}, ${VAR_NAME:?default}, and $VAR_NAME patterns
 func (l *Loader) expandEnvVar(s string) string {
 	re := regexp.MustCompile(`\$\{([^}]+)\}|\$([A-Z_][A-Z0-9_]*)`)
 
@@ -249,10 +249,14 @@ func (l *Loader) expandEnvVar(s string) string {
 		var varName, defaultValue string
 
 		if strings.HasPrefix(match, "${") {
-			// Handle ${VAR_NAME} or ${VAR_NAME:-default}
+			// Handle ${VAR_NAME}, ${VAR_NAME:-default}, or ${VAR_NAME:?default}
 			content := match[2 : len(match)-1]
 			if strings.Contains(content, ":-") {
 				parts := strings.SplitN(content, ":-", 2)
+				varName = parts[0]
+				defaultValue = parts[1]
+			} else if strings.Contains(content, ":?") {
+				parts := strings.SplitN(content, ":?", 2)
 				varName = parts[0]
 				defaultValue = parts[1]
 			} else {

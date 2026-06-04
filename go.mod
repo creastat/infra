@@ -8,6 +8,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/kaptinlin/jsonrepair v0.2.8
 	github.com/rs/zerolog v1.35.0
+	github.com/stretchr/testify v1.11.1
 	github.com/tailscale/hujson v0.0.0-20250605163823-992244df8c5a
 	gopkg.in/yaml.v3 v3.0.1
 )

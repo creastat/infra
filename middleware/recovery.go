@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/madmike/go-infra/telemetry"
@@ -13,13 +14,13 @@ func Recovery(logger telemetry.Logger) func(http.Handler) http.Handler {
 			defer func() {
 				if err := recover(); err != nil {
 					logger.Error("Panic recovered",
-						telemetry.Any("error", err),
+						telemetry.String("panic_type", fmt.Sprintf("%T", err)),
 						telemetry.String("method", r.Method),
 						telemetry.String("path", r.URL.Path),
 					)
 
 					w.WriteHeader(http.StatusInternalServerError)
-					w.Write([]byte(`{"success":false,"error":"Internal server error"}`))
+					_, _ = w.Write([]byte(`{"success":false,"error":"Internal server error"}`))
 				}
 			}()
 

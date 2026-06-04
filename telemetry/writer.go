@@ -81,7 +81,7 @@ func (w *ModuleConsoleWriter) Write(p []byte) (n int, err error) {
 	}
 
 	// Write the modified event to buffer
-	tempCW.Write(modifiedJSON)
+	_, _ = tempCW.Write(modifiedJSON)
 	output := buf.String()
 
 	// Insert module after the level if present

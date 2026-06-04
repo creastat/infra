@@ -184,7 +184,7 @@ func TestLoaderMissingFileSkipped(t *testing.T) {
 // TestLoaderInvalidFileFormat rejects unsupported formats.
 func TestLoaderInvalidFileFormat(t *testing.T) {
 	tempFile := "/tmp/config.txt"
-	os.WriteFile(tempFile, []byte("invalid"), 0644)
+	_ = os.WriteFile(tempFile, []byte("invalid"), 0644)
 	defer os.Remove(tempFile)
 
 	cfg := &TestConfig{}
